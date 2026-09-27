@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-void-600/40;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-void-950 text-star-100 font-body antialiased;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+  }
+
+  ::selection {
+    @apply bg-cosmic-violet/30 text-white;
+  }
+
+  :focus-visible {
+    outline: 2px solid #9b7bff;
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #05060b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1c2140;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #262c4e;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .text-gradient {
+    background: linear-gradient(115deg, #dde1ec 15%, #9b7bff 55%, #4fe3d6 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glass / mission-console surface */
+  .glass-panel {
+    @apply relative rounded-md border border-void-600/70 bg-void-800/50 backdrop-blur-md;
+    background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 40%);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-cosmic-cyan;
+  }
+
+  .module-tag {
+    @apply font-mono text-[11px] uppercase tracking-[0.12em] text-star-400;
+  }
+
+  /* Pulsing status dot, e.g. "ONLINE" */
+  .status-dot {
+    @apply relative inline-flex h-1.5 w-1.5 rounded-full bg-cosmic-cyan;
+  }
+  .status-dot::after {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-cosmic-cyan animate-pulse-ring;
+  }
+
+  /* HUD corner brackets — wrap any relatively-positioned container with .hud-frame */
+  .hud-frame::before,
+  .hud-frame::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .hud-frame::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1.5px solid #4fe3d6;
+    border-left: 1.5px solid #4fe3d6;
+  }
+  .hud-frame::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1.5px solid #4fe3d6;
+    border-right: 1.5px solid #4fe3d6;
+  }
+
+  /* Impact-fragment card: faceted corners instead of plain rounded rectangles */
+  .shard-card {
+    position: relative;
+    clip-path: polygon(
+      20px 0,
+      100% 0,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0 100%,
+      0 20px
+    );
+  }
+  .shard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, transparent 46%, rgba(79, 227, 214, 0.55) 50%, transparent 54%);
+    pointer-events: none;
+  }
+  .shard-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(-45deg, transparent 46%, rgba(155, 123, 255, 0.5) 50%, transparent 54%);
+    pointer-events: none;
+  }
+
+
+  /* Project visuals: each build gets its own cosmic accent without making the images oversized. */
+  .project-card[data-accent='violet'] {
+    --project-accent: #a855f7;
+    --project-secondary: #ec4899;
+    --project-accent-soft: rgba(168, 85, 247, 0.20);
+  }
+  .project-card[data-accent='cyan'] {
+    --project-accent: #22d3ee;
+    --project-secondary: #3b82f6;
+    --project-accent-soft: rgba(34, 211, 238, 0.20);
+  }
+  .project-card[data-accent='amber'] {
+    --project-accent: #f59e0b;
+    --project-secondary: #ef4444;
+    --project-accent-soft: rgba(245, 158, 11, 0.20);
+  }
+  .project-card {
+    border-color: color-mix(in srgb, var(--project-accent) 34%, rgba(100, 116, 139, 0.45));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.035),
+      0 16px 50px var(--project-accent-soft);
+  }
+  .project-card::before {
+    background: linear-gradient(135deg, transparent 43%, color-mix(in srgb, var(--project-accent) 75%, transparent) 50%, transparent 57%);
+  }
+  .project-card::after {
+    background: linear-gradient(-45deg, transparent 43%, color-mix(in srgb, var(--project-secondary) 70%, transparent) 50%, transparent 57%);
+  }
+  .project-card:hover {
+    border-color: color-mix(in srgb, var(--project-accent) 62%, rgba(255,255,255,.2));
+    box-shadow: 0 18px 70px var(--project-accent-soft);
+  }
+  .project-image {
+    border-color: color-mix(in srgb, var(--project-accent) 48%, rgba(100,116,139,.35));
+    box-shadow: inset 0 0 35px var(--project-accent-soft);
+  }
+  .project-accent {
+    color: var(--project-accent);
+    border-color: color-mix(in srgb, var(--project-accent) 50%, transparent);
+  }
+  .project-title {
+    background: linear-gradient(100deg, #f8fafc 12%, var(--project-accent) 62%, var(--project-secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .project-github {
+    border-color: color-mix(in srgb, var(--project-accent) 45%, rgba(100,116,139,.45));
+  }
+  .project-github:hover {
+    border-color: var(--project-accent);
+    color: var(--project-accent);
+    background: var(--project-accent-soft);
+  }
+  .project-tech {
+    border-color: color-mix(in srgb, var(--project-accent) 24%, rgba(100,116,139,.45));
+  }
+  .project-tech:hover {
+    color: var(--project-accent);
+    border-color: color-mix(in srgb, var(--project-accent) 55%, transparent);
+  }
+
+  /* Keep every section clean and transparent over the minimal starfield. */
+  section {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
